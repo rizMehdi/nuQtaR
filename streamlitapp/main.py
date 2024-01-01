@@ -23,7 +23,7 @@ def main():
     data = st.text_input('Enter data to encode in QR code:', 'Some data')
 
     # Additional options (in an expandable box)
-    with st.expander('Additional Options'):
+    with st.expander('More Settings'):
         error_correction = st.selectbox('Error Correction Level:', ['L', 'M', 'Q', 'H'], index=3)
         box_size = st.slider('Box Size:', min_value=1, max_value=50, value=10)
         border = st.slider('Border Size:', min_value=1, max_value=10, value=4)
@@ -36,6 +36,7 @@ def main():
         img_byte_array = io.BytesIO()
         qr_code_img.save(img_byte_array, format='PNG')
         
+        st.text("Right click and save or use the download button below")
         # Display the generated QR code
         st.image(img_byte_array, caption='Generated QR Code', use_column_width=True)
 
