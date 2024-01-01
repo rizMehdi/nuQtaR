@@ -1,31 +1,20 @@
 import streamlit as st
 import qrcode
-from PIL import Image, ImageDraw
+from PIL import Image
 import io
-from qrcode.image.styles import PilImage
-from qrcode.image.drawers import RoundedModuleDrawer
 
-def generate_qr_code(data, error_correction='L', box_size=10, border=4, style=None):
+def generate_qr_code(data):
     qr = qrcode.QRCode(
         version=1,
-        error_correction=getattr(qrcode.constants, f"ERROR_CORRECT_{error_correction.upper()}"),
-        box_size=box_size,
-        border=border,
+        error_correction=qrcode.constants.ERROR_CORRECT_L,
+        box_size=10,
+        border=4,
     )
     qr.add_data(data)
     qr.make(fit=True)
-    
-    if style:
-        qr_code_img = qr.make_image(
-            fill_color="black",
-            back_color="white",
-            image_factory=PilImage,
-            module_drawer=RoundedModuleDrawer(),
-        )
-    else:
-        qr_code_img = qr.make_image(fill_color="black", back_color="white")
-    
-    return qr_code_img
+
+    pil_image = qr.make_image(fill_color="black", back_color="white")
+    return pil_image
 
 def main():
     st.title('QR Code Generator')
@@ -33,28 +22,14 @@ def main():
     # User input
     data = st.text_input('Enter data to encode in QR code:', 'Some data')
 
-    # Additional options (in an expandable box)
-    with st.expander('Additional Options'):
-        error_correction = st.selectbox('Error Correction Level:', ['L', 'M', 'Q', 'H'], index=0)
-        box_size = st.slider('Box Size:', min_value=1, max_value=50, value=10)
-        border = st.slider('Border Size:', min_value=1, max_value=10, value=4)
-
-    # Styling options (in another expandable box)
-    with st.expander('Styling Options'):
-        # Add styling options here
-        style_option = st.selectbox('Choose Style Option:', ['None', 'RoundedCorners'], index=0)
-
     # Generate QR code
     if st.button('Generate QR Code'):
-        if style_option == 'RoundedCorners':
-            qr_code_img = generate_qr_code(data, error_correction, box_size, border, style=True)
-        else:
-            qr_code_img = generate_qr_code(data, error_correction, box_size, border, style=False)
-        
+        qr_code_img = generate_qr_code(data)
+
         # Convert PIL Image to bytes
         img_byte_array = io.BytesIO()
         qr_code_img.save(img_byte_array, format='PNG')
-        
+
         # Display the generated QR code
         st.image(img_byte_array, caption='Generated QR Code', use_column_width=True)
 
