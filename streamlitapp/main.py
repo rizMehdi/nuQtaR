@@ -1,5 +1,7 @@
 import streamlit as st
 import qrcode
+from PIL import Image
+import io
 
 def generate_qr_code(data, error_correction='L', box_size=10, border=4):
     qr = qrcode.QRCode(
@@ -11,8 +13,8 @@ def generate_qr_code(data, error_correction='L', box_size=10, border=4):
     qr.add_data(data)
     qr.make(fit=True)
     
-    img = qr.make_image(fill_color="black", back_color="white")
-    return img
+    pil_image = qr.make_image(fill_color="black", back_color="white")
+    return pil_image
 
 def main():
     st.title('QR Code Generator')
@@ -28,7 +30,13 @@ def main():
     # Generate QR code
     if st.button('Generate QR Code'):
         qr_code_img = generate_qr_code(data, error_correction, box_size, border)
-        st.image(qr_code_img, caption='Generated QR Code', use_column_width=True)
+        
+        # Convert PIL Image to bytes
+        img_byte_array = io.BytesIO()
+        qr_code_img.save(img_byte_array, format='PNG')
+        
+        # Display the generated QR code
+        st.image(img_byte_array, caption='Generated QR Code', use_column_width=True)
 
 if __name__ == '__main__':
     main()
