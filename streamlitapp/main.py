@@ -23,7 +23,7 @@ def main():
     data = st.text_input('Enter data to encode in QR code:', 'Some data')
 
     # Additional options (in an expandable box)
-    with st.beta_expander('Additional Options'):
+    with st.expander('Additional Options'):
         error_correction = st.selectbox('Error Correction Level:', ['L', 'M', 'Q', 'H'], index=3)
         box_size = st.slider('Box Size:', min_value=1, max_value=50, value=10)
         border = st.slider('Border Size:', min_value=1, max_value=10, value=4)
@@ -46,7 +46,7 @@ def main():
             file_name='generated_qr_code.png',
             mime='image/png',
         )
-        
+
 
 if __name__ == '__main__':
     main()
