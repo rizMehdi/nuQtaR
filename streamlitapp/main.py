@@ -22,10 +22,11 @@ def main():
     # User input
     data = st.text_input('Enter data to encode in QR code:', 'Some data')
 
-    # Additional options
-    error_correction = st.selectbox('Error Correction Level:', ['L', 'M', 'Q', 'H'], index=0)
-    box_size = st.slider('Box Size:', min_value=1, max_value=50, value=10)
-    border = st.slider('Border Size:', min_value=1, max_value=10, value=4)
+    # Additional options (in an expandable box)
+    with st.beta_expander('Additional Options'):
+        error_correction = st.selectbox('Error Correction Level:', ['L', 'M', 'Q', 'H'], index=0)
+        box_size = st.slider('Box Size:', min_value=1, max_value=50, value=10)
+        border = st.slider('Border Size:', min_value=1, max_value=10, value=4)
 
     # Generate QR code
     if st.button('Generate QR Code'):
