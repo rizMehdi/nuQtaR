@@ -11,7 +11,7 @@ from qrcode.image.styledpil import StyledPilImage
 
 # from qrcode.image.styles.moduledrawers.pil.py import GappedSquareModuleDrawer, CircleModuleDrawer, RoundedModuleDrawer, VerticalBarsDrawer, HorizontalBarsDrawer, SquareModuleDrawer
 
-import qrcode.image.styles.moduledrawers.pil.GappedSquareModuleDrawer 
+import qrcode.image.styles.moduledrawers #.pil.GappedSquareModuleDrawer 
 # qrcode/image/styles/moduledrawers/pil.py
 
 from qrcode.image.styles.colormasks import RadialGradiantColorMask
