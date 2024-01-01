@@ -2,6 +2,7 @@ import streamlit as st
 import qrcode
 from PIL import Image, ImageDraw
 import io
+from qrcode.image.styles import StyledPilImage, RoundedModuleDrawer, RadialGradiantColorMask
 
 def generate_qr_code(data, error_correction='L', box_size=10, border=4, style=None):
     qr = qrcode.QRCode(
@@ -44,12 +45,12 @@ def main():
     # Generate QR code
     if st.button('Generate QR Code'):
         if style_option == 'RoundedCorners':
-            style = qrcode.image.styles.StyledPilImage(module_drawer=qrcode.image.styles.moduledrawers.pil.RoundedModuleDrawer())
+            style = StyledPilImage(module_drawer=RoundedModuleDrawer())
         elif style_option == 'RadialGradientColorMask':
-            style = qrcode.image.styles.StyledPilImage(color_mask=qrcode.image.styles.colormasks.RadialGradiantColorMask())
+            style = StyledPilImage(color_mask=RadialGradiantColorMask())
         elif style_option == 'EmbeddedImage':
             # Replace "/path/to/image.png" with the actual path to the image you want to embed
-            style = qrcode.image.styles.StyledPilImage(embeded_image_path="/path/to/image.png")
+            style = StyledPilImage(embeded_image_path="/path/to/image.png")
         else:
             style = None
 
