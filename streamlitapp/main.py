@@ -2,7 +2,8 @@ import streamlit as st
 import qrcode
 from PIL import Image, ImageDraw
 import io
-from qrcode.image.styles import StyledPilImage, RoundedModuleDrawer, RadialGradiantColorMask
+from qrcode.image.styles import PilImage
+from qrcode.image.drawers import RoundedModuleDrawer
 
 def generate_qr_code(data, error_correction='L', box_size=10, border=4, style=None):
     qr = qrcode.QRCode(
@@ -18,7 +19,8 @@ def generate_qr_code(data, error_correction='L', box_size=10, border=4, style=No
         qr_code_img = qr.make_image(
             fill_color="black",
             back_color="white",
-            image_factory=style,
+            image_factory=PilImage,
+            module_drawer=RoundedModuleDrawer(),
         )
     else:
         qr_code_img = qr.make_image(fill_color="black", back_color="white")
@@ -40,21 +42,14 @@ def main():
     # Styling options (in another expandable box)
     with st.expander('Styling Options'):
         # Add styling options here
-        style_option = st.selectbox('Choose Style Option:', ['None', 'RoundedCorners', 'RadialGradientColorMask', 'EmbeddedImage'], index=0)
+        style_option = st.selectbox('Choose Style Option:', ['None', 'RoundedCorners'], index=0)
 
     # Generate QR code
     if st.button('Generate QR Code'):
         if style_option == 'RoundedCorners':
-            style = StyledPilImage(module_drawer=RoundedModuleDrawer())
-        elif style_option == 'RadialGradientColorMask':
-            style = StyledPilImage(color_mask=RadialGradiantColorMask())
-        elif style_option == 'EmbeddedImage':
-            # Replace "/path/to/image.png" with the actual path to the image you want to embed
-            style = StyledPilImage(embeded_image_path="/path/to/image.png")
+            qr_code_img = generate_qr_code(data, error_correction, box_size, border, style=True)
         else:
-            style = None
-
-        qr_code_img = generate_qr_code(data, error_correction, box_size, border, style)
+            qr_code_img = generate_qr_code(data, error_correction, box_size, border, style=False)
         
         # Convert PIL Image to bytes
         img_byte_array = io.BytesIO()
