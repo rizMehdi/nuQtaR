@@ -11,7 +11,7 @@ from qrcode.image.styledpil import StyledPilImage
 
 # from qrcode.image.styles.moduledrawers.pil.py import GappedSquareModuleDrawer, CircleModuleDrawer, RoundedModuleDrawer, VerticalBarsDrawer, HorizontalBarsDrawer, SquareModuleDrawer
 
-import qrcode.image.styles.moduledrawers as md
+import qrcode.image.styles.moduledrawers.pil as md
 # qrcode/image/styles/moduledrawers/pil.py
 
 from qrcode.image.styles.colormasks import RadialGradiantColorMask
@@ -29,7 +29,7 @@ def generate_qr_code(data, error_correction='L', box_size=10, border=4,dotStyle=
     qr.make(fit=True)
     
     if   dotStyle=='Sqaure with gaps':
-        pil_image = qr.make_image(image_factory=StyledPilImage, module_drawer= md.pil.GappedSquareModuleDrawer())
+        pil_image = qr.make_image(image_factory=StyledPilImage, module_drawer= md.GappedSquareModuleDrawer())
     elif dotStyle=='Dots':
         pil_image = qr.make_image(image_factory=StyledPilImage, module_drawer= CircleModuleDrawer())
     elif dotStyle=='Rounded Square':
