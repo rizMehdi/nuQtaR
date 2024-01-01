@@ -29,7 +29,7 @@ def generate_qr_code(data, error_correction='L', box_size=10, border=4,dotStyle=
     qr.make(fit=True)
     
     if   dotStyle=='Sqaure with gaps':
-        pil_image = qr.make_image(image_factory=StyledPilImage, module_drawer= GappedSquareModuleDrawer())
+        pil_image = qr.make_image(image_factory=StyledPilImage, module_drawer= pil.GappedSquareModuleDrawer())
     elif dotStyle=='Dots':
         pil_image = qr.make_image(image_factory=StyledPilImage, module_drawer= CircleModuleDrawer())
     elif dotStyle=='Rounded Square':
