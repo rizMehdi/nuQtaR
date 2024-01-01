@@ -24,7 +24,7 @@ def main():
 
     # Additional options (in an expandable box)
     with st.beta_expander('Additional Options'):
-        error_correction = st.selectbox('Error Correction Level:', ['L', 'M', 'Q', 'H'], index=0)
+        error_correction = st.selectbox('Error Correction Level:', ['L', 'M', 'Q', 'H'], index=3)
         box_size = st.slider('Box Size:', min_value=1, max_value=50, value=10)
         border = st.slider('Border Size:', min_value=1, max_value=10, value=4)
 
@@ -38,6 +38,15 @@ def main():
         
         # Display the generated QR code
         st.image(img_byte_array, caption='Generated QR Code', use_column_width=True)
+
+            # Download button
+        st.download_button(
+            label='Download QR Code',
+            data=img_byte_array.getvalue(),
+            file_name='generated_qr_code.png',
+            mime='image/png',
+        )
+        
 
 if __name__ == '__main__':
     main()
