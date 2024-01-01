@@ -17,7 +17,7 @@ def generate_qr_code(data, error_correction='L', box_size=10, border=4):
     return pil_image
 
 def main():
-    st.title('QR Code Generator')
+    st.title('nuQtaR - a nuqta-styled QR Code Generator')
 
     # User input
     data = st.text_input('Enter data to encode in QR code:', 'Some data')
