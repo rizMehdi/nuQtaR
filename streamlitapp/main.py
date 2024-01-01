@@ -14,7 +14,11 @@ def generate_qr_code(data, error_correction='L', box_size=10, border=4, style=No
     qr.make(fit=True)
     
     if style:
-        qr_code_img = style(qr.make_image(fill_color="black", back_color="white"))
+        qr_code_img = qr.make_image(
+            fill_color="black",
+            back_color="white",
+            image_factory=style,
+        )
     else:
         qr_code_img = qr.make_image(fill_color="black", back_color="white")
     
@@ -35,17 +39,17 @@ def main():
     # Styling options (in another expandable box)
     with st.expander('Styling Options'):
         # Add styling options here
-        style_option = st.selectbox('Choose Style Option:', ['None', 'StyledPilImage', 'SvgSquareDrawer', 'SvgCircleDrawer'], index=0)
-        size_ratio = st.slider('Size Ratio:', min_value=0.1, max_value=1.0, value=1.0, step=0.1)
+        style_option = st.selectbox('Choose Style Option:', ['None', 'RoundedCorners', 'RadialGradientColorMask', 'EmbeddedImage'], index=0)
 
     # Generate QR code
     if st.button('Generate QR Code'):
-        if style_option == 'StyledPilImage':
-            style = qrcode.image.styles.StyledPilImage
-        elif style_option == 'SvgSquareDrawer':
-            style = qrcode.image.styles.SvgSquareDrawer(size_ratio=size_ratio)
-        elif style_option == 'SvgCircleDrawer':
-            style = qrcode.image.styles.SvgCircleDrawer(size_ratio=size_ratio)
+        if style_option == 'RoundedCorners':
+            style = qrcode.image.styles.StyledPilImage(module_drawer=qrcode.image.styles.moduledrawers.pil.RoundedModuleDrawer())
+        elif style_option == 'RadialGradientColorMask':
+            style = qrcode.image.styles.StyledPilImage(color_mask=qrcode.image.styles.colormasks.RadialGradiantColorMask())
+        elif style_option == 'EmbeddedImage':
+            # Replace "/path/to/image.png" with the actual path to the image you want to embed
+            style = qrcode.image.styles.StyledPilImage(embeded_image_path="/path/to/image.png")
         else:
             style = None
 
