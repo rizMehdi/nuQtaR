@@ -3,7 +3,14 @@ import qrcode
 from PIL import Image
 import io
 
-def generate_qr_code(data, error_correction='L', box_size=10, border=4):
+
+from qrcode.image.styledpil import StyledPilImage
+from qrcode.image.styles.moduledrawers.pil import RoundedModuleDrawer
+from qrcode.image.styles.colormasks import RadialGradiantColorMask
+
+
+
+def generate_qr_code(data, error_correction='L', box_size=10, border=4,dotStyle='Square'):
     qr = qrcode.QRCode(
         version=1,
         error_correction=getattr(qrcode.constants, f"ERROR_CORRECT_{error_correction.upper()}"),
@@ -13,7 +20,32 @@ def generate_qr_code(data, error_correction='L', box_size=10, border=4):
     qr.add_data(data)
     qr.make(fit=True)
     
-    pil_image = qr.make_image(fill_color="black", back_color="white")
+    if   dotStyle=='Sqaure with gaps':
+        pil_image = qr.make_image(image_factory=StyledPilImage, module_drawer= GappedSquareModuleDrawer())
+    elif dotStyle=='Dots':
+        pil_image = qr.make_image(image_factory=StyledPilImage, module_drawer= CircleModuleDrawer())
+    elif dotStyle=='Rounded Square':
+        pil_image = qr.make_image(image_factory=StyledPilImage, module_drawer= RoundedModuleDrawer())
+    elif dotStyle=='Vertical Bars':
+        pil_image = qr.make_image(image_factory=StyledPilImage, module_drawer= VerticalBarsDrawer())
+    elif dotStyle=='Horizontal Bars':
+        pil_image = qr.make_image(image_factory=StyledPilImage, module_drawer= HorizontalBarsDrawer())
+    elif dotStyle=='Square':
+        pil_image = qr.make_image(image_factory=StyledPilImage, module_drawer= SquareModuleDrawer())
+    else:
+        pil_image = qr.make_image(fill_color="black", back_color="white")
+
+        #('Style:', ['Square', 'Sqaure with gaps', 'Dots', 'Rounded Square', 'Vertical Bars', 'Horizontal Bars'], index=0)
+            # SquareModuleDrawer
+            # GappedSquareModuleDrawer
+            # CircleModuleDrawer
+            # RoundedModuleDrawer
+            # VerticalBarsDrawer
+            # HorizontalBarsDrawer
+
+
+# img_1 = qr.make_image(image_factory=StyledPilImage, module_drawer=RoundedModuleDrawer())
+# img_2 = qr.make_image(image_factory=StyledPilImage, color_mask=RadialGradiantColorMask())
     return pil_image
 
 def main():
@@ -22,6 +54,14 @@ def main():
     # User input
     data = st.text_input('Enter data to encode in QR code:', 'Some data')
 
+    with st.expander('Styling Options'):
+        dotStyle = st.selectbox('Style:', ['Square', 'Sqaure with gaps', 'Dots', 'Rounded Square', 'Vertical Bars', 'Horizontal Bars'], index=0)
+            # SquareModuleDrawer
+            # GappedSquareModuleDrawer
+            # CircleModuleDrawer
+            # RoundedModuleDrawer
+            # VerticalBarsDrawer
+            # HorizontalBarsDrawer
     # Additional options (in an expandable box)
     with st.expander('Additional Options'):
         error_correction = st.selectbox('Error Correction Level:', ['L', 'M', 'Q', 'H'], index=0)
@@ -30,7 +70,7 @@ def main():
 
     # Generate QR code
     if st.button('Generate QR Code'):
-        qr_code_img = generate_qr_code(data, error_correction, box_size, border)
+        qr_code_img = generate_qr_code(data, error_correction, box_size, border,dotStyle)
         
         # Convert PIL Image to bytes
         img_byte_array = io.BytesIO()
