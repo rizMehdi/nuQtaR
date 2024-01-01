@@ -5,7 +5,7 @@ import io
 
 
 from qrcode.image.styledpil import StyledPilImage
-from qrcode.image.styles.moduledrawers.pil import RoundedModuleDrawer
+from qrcode.image.drawers.pil import GappedSquareModuleDrawer, CircleModuleDrawer, RoundedModuleDrawer, VerticalBarsDrawer, HorizontalBarsDrawer, SquareModuleDrawer
 from qrcode.image.styles.colormasks import RadialGradiantColorMask
 
 
