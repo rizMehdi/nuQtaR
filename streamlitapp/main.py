@@ -75,10 +75,11 @@ def main():
             # HorizontalBarsDrawer
     # Additional options (in an expandable box)
     with st.expander('Additional Options'):
-        error_correction = st.selectbox('Error Correction Level:', ['L', 'M', 'Q', 'H'], index=0)
+        # error_correction = st.selectbox('Error Correction Level:', ['L', 'M', 'Q', 'H'], index=0)
         box_size = st.slider('Box Size:', min_value=1, max_value=50, value=30)
         border = st.slider('Border Size:', min_value=1, max_value=10, value=4)
 
+    error_correction='H'
     # Generate QR code
     if st.button('Generate QR Code'):
         qr_code_img = generate_qr_code(data, error_correction, box_size, border,dotStyle)
