@@ -18,7 +18,7 @@ from qrcode.image.styles.moduledrawers.pil import RhombusModuleDrawer
 from qrcode.image.styles.colormasks import RadialGradiantColorMask
 
 
-def generate_qr_code(data, error_correction='L', box_size=30, border=4,dotStyle='Square'):
+def generate_qr_code(data, error_correction='L', box_size=30, border=4,dotStyle='Nuqta (Rhombus)'):
     qr = qrcode.QRCode(
         version=1,
         error_correction=getattr(qrcode.constants, f"ERROR_CORRECT_{error_correction.upper()}"),
@@ -76,15 +76,24 @@ def main():
     ########################### app sidebar ########################################à
     st.sidebar.text('Additional Settings:')
     with st.sidebar.expander('Styling Options'):
-        dotStyle = st.sidebar.selectbox('Style:', ['Square', 'Dots', 'Nuqta (Rhombus)','Sqaure with gaps',  'Rounded Square', 'Vertical Bars', 'Horizontal Bars'], index=0)
+        dotStyle = st.sidebar.selectbox('Style:', ['Nuqta (Rhombus)', 'Square', 'Dots', ,'Sqaure with gaps',  'Rounded Square', 'Vertical Bars', 'Horizontal Bars'], index=0)
         # error_correction = st.selectbox('Error Correction Level:', ['L', 'M', 'Q', 'H'], index=0)
         box_size = st.sidebar.slider('QR Code Size:', min_value=1, max_value=50, value=30)
         border = st.sidebar.slider('Border around QR code):', min_value=1, max_value=10, value=4)
+    
+    st.sidebar.markdown("""---""")
+    badge="""
+    [![Mehdi Rizvi](https://img.shields.io/badge/Author-@rizMehdi-grey.svg?colorA=gray&colorB=dodgerblue&logo=github)](https://github.com/rizMehdi/)
+    """
+    st.sidebar.markdown(badge,  unsafe_allow_html=False)
+    
 
+
+    ########################### app logic ########################################à
     error_correction='H'
     # Generate QR code
     if st.button('Generate QR Code'):
-        qr_code_img = generate_qr_code(data, error_correction, box_size, border,dotStyle)
+        qr_code_img = generate_qr_code(data, error_correction, box_size, border, dotStyle)
         
         # Convert PIL Image to bytes
         img_byte_array = io.BytesIO()
