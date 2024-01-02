@@ -76,10 +76,10 @@ def main():
     ########################### app sidebar ########################################à
     st.sidebar.text('Additional Settings:')
     with st.sidebar.expander('Styling Options'):
-        dotStyle = st.sidebar.selectbox('Style:', ['Nuqta (Rhombus)', 'Square', 'Dots', ,'Sqaure with gaps',  'Rounded Square', 'Vertical Bars', 'Horizontal Bars'], index=0)
+        dotStyle = st.sidebar.selectbox('Style:', ['Nuqta (Rhombus)', 'Square', 'Dots', 'Sqaure with gaps',  'Rounded Square', 'Vertical Bars', 'Horizontal Bars'], index=0)
         # error_correction = st.selectbox('Error Correction Level:', ['L', 'M', 'Q', 'H'], index=0)
         box_size = st.sidebar.slider('QR Code Size:', min_value=1, max_value=50, value=30)
-        border = st.sidebar.slider('Border around QR code):', min_value=1, max_value=10, value=4)
+        border = st.sidebar.slider('Border around QR code:', min_value=1, max_value=10, value=4)
     
     st.sidebar.markdown("""---""")
     badge="""
@@ -93,7 +93,7 @@ def main():
     error_correction='H'
     # Generate QR code
     if st.button('Generate QR Code'):
-        qr_code_img = generate_qr_code(data, error_correction, box_size, border, dotStyle)
+        qr_code_img = generate_qr_code(data, error_correction, box_size, border,dotStyle)
         
         # Convert PIL Image to bytes
         img_byte_array = io.BytesIO()
