@@ -2,7 +2,7 @@ import streamlit as st
 import qrcode
 from PIL import Image
 import io
-
+import mods #for custom modifications to default streamlit app style
 
 from qrcode.image.styledpil import StyledPilImage
 # from qrcode.image.styles.moduledrawers.pil import GappedSquareModuleDrawer
