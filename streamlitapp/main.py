@@ -66,7 +66,7 @@ def main():
     data = st.text_input('Enter data to encode in QR code:', 'Some data')
 
     with st.expander('Styling Options'):
-        dotStyle = st.selectbox('Style:', ['Square', 'Sqaure with gaps', 'Dots', 'Rounded Square', 'Vertical Bars', 'Horizontal Bars'], index=0)
+        dotStyle = st.selectbox('Style:', ['Square', 'Dots', 'Nuqta (Rhombus)','Sqaure with gaps',  'Rounded Square', 'Vertical Bars', 'Horizontal Bars'], index=0)
             # SquareModuleDrawer
             # GappedSquareModuleDrawer
             # CircleModuleDrawer
@@ -76,7 +76,7 @@ def main():
     # Additional options (in an expandable box)
     with st.expander('Additional Options'):
         error_correction = st.selectbox('Error Correction Level:', ['L', 'M', 'Q', 'H'], index=0)
-        box_size = st.slider('Box Size:', min_value=1, max_value=50, value=10)
+        box_size = st.slider('Box Size:', min_value=1, max_value=50, value=30)
         border = st.slider('Border Size:', min_value=1, max_value=10, value=4)
 
     # Generate QR code
