@@ -51,7 +51,8 @@ def main():
 
     #################################################################################à
     #apply custom modifications to default streamlit app style
-    st.set_page_config(page_title="nuQtaR",page_icon=None,layout="wide",initial_sidebar_state="expanded")
+    # st.set_page_config(page_title="nuQtaR",page_icon=None,layout="wide",initial_sidebar_state="expanded")
+    st.set_page_config(page_title="nuQtaR",page_icon=None)
     st.markdown(mods.hide_menu_style, unsafe_allow_html=True)
     st.markdown(mods.hide_img_fs, unsafe_allow_html=True)
     # st.markdown(mods.fix_sidebar,unsafe_allow_html=True)
