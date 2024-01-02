@@ -83,7 +83,7 @@ def main():
         img_byte_array = io.BytesIO()
         qr_code_img.save(img_byte_array, format='PNG')
         
-        image_col, padding1 = st.columns([1,1])
+        image_col, padding1 = st.columns([2,1])
         with image_col:    
         # Display the generated QR code
             st.image(img_byte_array, caption='QR Code for: '+data, use_column_width=True)
