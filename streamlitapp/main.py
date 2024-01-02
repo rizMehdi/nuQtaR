@@ -18,7 +18,6 @@ from qrcode.image.styles.moduledrawers.pil import RhombusModuleDrawer
 from qrcode.image.styles.colormasks import RadialGradiantColorMask
 
 
-
 def generate_qr_code(data, error_correction='L', box_size=30, border=4,dotStyle='Square'):
     qr = qrcode.QRCode(
         version=1,
@@ -54,30 +53,33 @@ def generate_qr_code(data, error_correction='L', box_size=30, border=4,dotStyle=
             # VerticalBarsDrawer
             # HorizontalBarsDrawer
 
-
-# img_1 = qr.make_image(image_factory=StyledPilImage, module_drawer=RoundedModuleDrawer())
-# img_2 = qr.make_image(image_factory=StyledPilImage, color_mask=RadialGradiantColorMask())
     return pil_image
 
 def main():
-    st.title('nuQtaR - a nuqta-sytled QR Code Generator')
 
+    #################################################################################à
+    #apply custom modifications to default streamlit app style
+    st.set_page_config(page_title="nuQtaR",page_icon=None,layout="wide",initial_sidebar_state="expanded")
+    st.markdown(mods.hide_menu_style, unsafe_allow_html=True)
+    st.markdown(mods.hide_img_fs, unsafe_allow_html=True)
+    st.markdown(mods.fix_sidebar,unsafe_allow_html=True)
+    st.markdown(mods.fix_tabs, unsafe_allow_html=True)
+    st.markdown(mods.hide_top_padding, unsafe_allow_html=True)
+
+    ########################### main app ########################################à
+
+    st.title('nuQtaR - a nuqta-sytled QR Code Generator')
     # User input
     data = st.text_input('Enter data to encode in QR code:', 'Some data')
 
-    with st.expander('Styling Options'):
-        dotStyle = st.selectbox('Style:', ['Square', 'Dots', 'Nuqta (Rhombus)','Sqaure with gaps',  'Rounded Square', 'Vertical Bars', 'Horizontal Bars'], index=0)
-            # SquareModuleDrawer
-            # GappedSquareModuleDrawer
-            # CircleModuleDrawer
-            # RoundedModuleDrawer
-            # VerticalBarsDrawer
-            # HorizontalBarsDrawer
-    # Additional options (in an expandable box)
-    with st.expander('Additional Options'):
+
+    ########################### app sidebar ########################################à
+    st.sidebar.text('Additional Settings:')
+    with st.sidebar.expander('Styling Options'):
+        dotStyle = st.sidebar.selectbox('Style:', ['Square', 'Dots', 'Nuqta (Rhombus)','Sqaure with gaps',  'Rounded Square', 'Vertical Bars', 'Horizontal Bars'], index=0)
         # error_correction = st.selectbox('Error Correction Level:', ['L', 'M', 'Q', 'H'], index=0)
-        box_size = st.slider('Box Size:', min_value=1, max_value=50, value=30)
-        border = st.slider('Border Size:', min_value=1, max_value=10, value=4)
+        box_size = st.sidebar.slider('QR Code Size:', min_value=1, max_value=50, value=30)
+        border = st.sidebar.slider('Border around QR code):', min_value=1, max_value=10, value=4)
 
     error_correction='H'
     # Generate QR code
