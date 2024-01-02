@@ -45,14 +45,6 @@ def generate_qr_code(data, error_correction='L', box_size=30, border=4,dotStyle=
     else:
         pil_image = qr.make_image(fill_color="black", back_color="white")
 
-        #('Style:', ['Square', 'Sqaure with gaps', 'Dots', 'Rounded Square', 'Vertical Bars', 'Horizontal Bars'], index=0)
-            # SquareModuleDrawer
-            # GappedSquareModuleDrawer
-            # CircleModuleDrawer
-            # RoundedModuleDrawer
-            # VerticalBarsDrawer
-            # HorizontalBarsDrawer
-
     return pil_image
 
 def main():
@@ -62,35 +54,26 @@ def main():
     st.set_page_config(page_title="nuQtaR",page_icon=None,layout="wide",initial_sidebar_state="expanded")
     st.markdown(mods.hide_menu_style, unsafe_allow_html=True)
     st.markdown(mods.hide_img_fs, unsafe_allow_html=True)
-    st.markdown(mods.fix_sidebar,unsafe_allow_html=True)
+    # st.markdown(mods.fix_sidebar,unsafe_allow_html=True)
     st.markdown(mods.fix_tabs, unsafe_allow_html=True)
     st.markdown(mods.hide_top_padding, unsafe_allow_html=True)
 
     ########################### main app ########################################à
-
     st.title('nuQtaR - a nuqta-sytled QR Code Generator')
     # User input
-    data = st.text_input('Enter data to encode in QR code:', 'Some data')
-
-
-    ########################### app sidebar ########################################à
-    st.sidebar.text('Additional Settings:')
-    with st.sidebar.expander('Styling Options'):
-        dotStyle = st.sidebar.selectbox('Style:', ['Nuqta (Rhombus)', 'Square', 'Dots', 'Sqaure with gaps',  'Rounded Square', 'Vertical Bars', 'Horizontal Bars'], index=0)
-        # error_correction = st.selectbox('Error Correction Level:', ['L', 'M', 'Q', 'H'], index=0)
-        box_size = st.sidebar.slider('QR Code Size:', min_value=1, max_value=50, value=30)
-        border = st.sidebar.slider('Border around QR code:', min_value=1, max_value=10, value=4)
-    
-    st.sidebar.markdown("""---""")
-    badge="""
-    [![Mehdi Rizvi](https://img.shields.io/badge/Author-@rizMehdi-grey.svg?colorA=gray&colorB=dodgerblue&logo=github)](https://github.com/rizMehdi/)
-    """
-    st.sidebar.markdown(badge,  unsafe_allow_html=False)
-    
-
-
-    ########################### app logic ########################################à
+    data = st.text_input('Enter text or URL to encode in QR code:', 'your text or URL')
     error_correction='H'
+
+    
+    with st.expander('+ Additional Settings'):
+        dotStyle = st.selectbox('Style:', ['Nuqta (Rhombus)', 'Square', 'Dots', 'Sqaure with gaps',  'Rounded Square', 'Vertical Bars', 'Horizontal Bars'], index=0)
+        # error_correction = st.selectbox('Error Correction Level:', ['L', 'M', 'Q', 'H'], index=0)
+        box_size = st.slider('QR Code Size:', min_value=1, max_value=50, value=30)
+        border = st.slider('Border around QR code:', min_value=1, max_value=10, value=4)
+    
+ 
+    
+
     # Generate QR code
     if st.button('Generate QR Code'):
         qr_code_img = generate_qr_code(data, error_correction, box_size, border,dotStyle)
@@ -111,5 +94,11 @@ def main():
             file_name='generated_qr_code.png',
             mime='image/png',
         )
+    st.markdown("""---""")
+    badge="""
+    [![Mehdi Rizvi](https://img.shields.io/badge/Author-@rizMehdi-grey.svg?colorA=gray&colorB=dodgerblue&logo=github)](https://github.com/rizMehdi/)
+    """
+    st.markdown(badge,  unsafe_allow_html=False)
+
 if __name__ == '__main__':
     main()
