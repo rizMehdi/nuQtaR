@@ -10,6 +10,7 @@ from qrcode.image.styledpil import StyledPilImage
 # ^mistake in lib\
 
 from qrcode.image.styles.moduledrawers.pil import GappedSquareModuleDrawer, CircleModuleDrawer, RoundedModuleDrawer, VerticalBarsDrawer, HorizontalBarsDrawer, SquareModuleDrawer
+from qrcode.image.styles.moduledrawers.pil import RhombusModuleDrawer
 
 # import qrcode.image.styles.moduledrawers #.pil.GappedSquareModuleDrawer 
 # qrcode/image/styles/moduledrawers/pil.py
@@ -18,7 +19,7 @@ from qrcode.image.styles.colormasks import RadialGradiantColorMask
 
 
 
-def generate_qr_code(data, error_correction='L', box_size=10, border=4,dotStyle='Square'):
+def generate_qr_code(data, error_correction='L', box_size=30, border=4,dotStyle='Square'):
     qr = qrcode.QRCode(
         version=1,
         error_correction=getattr(qrcode.constants, f"ERROR_CORRECT_{error_correction.upper()}"),
@@ -32,6 +33,8 @@ def generate_qr_code(data, error_correction='L', box_size=10, border=4,dotStyle=
         pil_image = qr.make_image(image_factory=StyledPilImage, module_drawer= GappedSquareModuleDrawer())
     elif dotStyle=='Dots':
         pil_image = qr.make_image(image_factory=StyledPilImage, module_drawer= CircleModuleDrawer())
+    elif dotStyle=='Nuqta (Rhombus)':
+        pil_image = qr.make_image(image_factory=StyledPilImage, module_drawer= RhombusModuleDrawer())
     elif dotStyle=='Rounded Square':
         pil_image = qr.make_image(image_factory=StyledPilImage, module_drawer= RoundedModuleDrawer())
     elif dotStyle=='Vertical Bars':
